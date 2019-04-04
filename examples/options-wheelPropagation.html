@@ -39,6 +39,14 @@
       </div>
     </div>
     <div class="space">FOR SPACE</div>
+    <div class="container">
+      <div class="content">
+        wheelPropagation: true,<br />
+        suppressScrollY: true,<br />
+        useBothWheelAxes: true
+      </div>
+    </div>
+    <div class="space">FOR SPACE</div>
 
     <script>
     var containers = document.querySelectorAll('.container');
@@ -47,6 +55,12 @@
 
     new PerfectScrollbar(containers[1], {
       wheelPropagation: true
+    });
+
+    new PerfectScrollbar(containers[2], {
+      wheelPropagation: true,
+      suppressScrollY: true,
+      useBothWheelAxes: true
     });
     </script>
   </body>

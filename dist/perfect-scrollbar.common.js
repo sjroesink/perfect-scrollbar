@@ -1,6 +1,6 @@
 /*!
  * perfect-scrollbar v1.4.0
- * (c) 2018 Hyunje Jun
+ * (c) 2019 Hyunje Jun
  * @license MIT
  */
 'use strict';
@@ -835,7 +835,8 @@ var wheel = function(i) {
       return;
     }
 
-    var shouldPrevent = false;
+    var prevScrollTop = element.scrollTop;
+    var prevScrollLeft = element.scrollLeft;
     if (!i.settings.useBothWheelAxes) {
       // deltaX will only be used for horizontal scrolling and deltaY will
       // only be used for vertical scrolling - this is the default
@@ -846,24 +847,23 @@ var wheel = function(i) {
       // active, so let's scroll vertical bar using both mouse wheel axes
       if (deltaY) {
         element.scrollTop -= deltaY * i.settings.wheelSpeed;
-      } else {
+      } else if (deltaX) {
         element.scrollTop += deltaX * i.settings.wheelSpeed;
       }
-      shouldPrevent = true;
     } else if (i.scrollbarXActive && !i.scrollbarYActive) {
       // useBothWheelAxes and only horizontal bar is active, so use both
       // wheel axes for horizontal bar
       if (deltaX) {
         element.scrollLeft += deltaX * i.settings.wheelSpeed;
-      } else {
+      } else if (deltaY) {
         element.scrollLeft -= deltaY * i.settings.wheelSpeed;
       }
-      shouldPrevent = true;
     }
 
     updateGeometry(i);
 
-    shouldPrevent = shouldPrevent || shouldPreventDefault(deltaX, deltaY);
+    var shouldPrevent = element.scrollLeft !== prevScrollLeft ||
+      element.scrollTop !== prevScrollTop || shouldPreventDefault(deltaX, deltaY);
     if (shouldPrevent && !e.ctrlKey) {
       e.stopPropagation();
       e.preventDefault();
