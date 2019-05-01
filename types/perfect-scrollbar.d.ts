@@ -20,6 +20,8 @@ declare class PerfectScrollbar {
 
   update(): void;
   destroy(): void;
+  scrollbarXActive: boolean;
+  scrollbarYActive: boolean;
 
   reach: { x: 'start' | 'end' | null, y: 'start' | 'end' | null };
 }
